@@ -32,10 +32,12 @@ if not DigitalDisplay then
             local nbDecimal = 0
             local nbDecimalToKeep = 0
             -- if we have decimals, we count the number of integer and digits
-            if string.find(tostring(numbertodraw), ".") then
+            if string.find(tostring(numbertodraw), "%.") then
                 split_nb = split(tostring(numbertodraw), "%.")
-                nbIntegers = #split_nb[1]
-                nbDecimal = #split_nb[2]:gsub("%%", "")
+                nbIntegers = #split_nb[1]:gsub("%%", "")
+                if split_nb[2] then
+                    nbDecimal = #split_nb[2]:gsub("%%", "")
+                end
             else
                 nbIntegers = #tostring(numbertodraw)
             end
@@ -46,19 +48,60 @@ if not DigitalDisplay then
                 if (nbIntegers + nbDecimal) > maxdigit then
                     -- we need to keep a maximum amount of digits
                     nbDecimalToKeep = maxdigit - nbIntegers
+                else
+                    nbDecimalToKeep = nbDecimal
                 end
             end
-            logMessage('int ' .. nbIntegers)
-            logMessage('decimal ' .. nbDecimal)
-            logMessage('nbDecimalToKeep ' .. nbDecimalToKeep)
-
+            if nbDecimalToKeep > 0 then
+                --Rounding the number
+                numbertodraw = tonumber(string.format('%.'..nbDecimalToKeep..'f', numbertodraw))
+            else
+                --Round
+                numbertodraw = tonumber(string.format('%.0f', numbertodraw))
+            end
+            local numberstr = ''
+            if setAllToNine then
+                for i = 1, maxdigit, 1 do
+                    numberstr = numberstr..'9'
+                end
+            else
+                local numberpadding = maxdigit - (nbIntegers + nbDecimalToKeep)
+                -- Case when we have more counters than numbers to display
+                if numberpadding>0 then
+                    for i=1, numberpadding, 1 do
+                        numberstr = numberstr..'X'
+                    end
+                    numberstr = numberstr..numbertodraw
+                else
+                    -- Everything is ok
+                    numberstr = numbertodraw
+                end
+            end
+            logMessage('Nb to draw ' .. numberstr)
+            --Put the string into a table
+            local numbertable={}
+            numberstr = tostring(numberstr)
+            local indexToRemove = 0
+            for i = 1, #numberstr do
+                local fchar =  numberstr:sub(i, i)
+                if string.find(tostring(fchar), "%.") then
+                    numbertable[i-1]=numbertable[i-1]..fchar
+                    indexToRemove = i
+                else
+                    numbertable[i] = fchar
+                end
+            end
+            if(indexToRemove>0) then
+                table.remove(numbertable, indexToRemove)
+            end
             xoffset = 0
             yoffset = 0
             withp = true
-            for i = 1, maxdigit, 1 do
-                if i == maxdigit then
+            for i = 1, #numbertable, 1 do
+                if i == #numbertable then
                     withp = false
                 end
+                logMessage('Digit to draw ' .. numbertable[i])
                 self:drawDigit(layer, x + xoffset, y, withp);
                 xoffset = xoffset + (triangleWidth * 2) + horizontalLineWidth + (triangleWidth * 2) + (lineSpacing * 2)
             end
