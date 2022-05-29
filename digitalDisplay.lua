@@ -15,7 +15,7 @@ if not DigitalDisplay then
             r = r or 1,
             g = g or 0,
             b = b or 0,
-            backcolorRatio = backcolorRatio or 0.09,
+            backcolorRatio = backcolorRatio or 0.05,
             horizontalLineWidth = 10 * size,
             horizontalLineHeight = 4 * size,
             triangleWidth = 4 * size,
@@ -77,7 +77,6 @@ if not DigitalDisplay then
                     numberstr = numbertodraw
                 end
             end
-            logMessage('Nb to draw ' .. numberstr)
             --Put the string into a table
             local numbertable={}
             numberstr = tostring(numberstr)
@@ -101,22 +100,33 @@ if not DigitalDisplay then
                 if i == #numbertable then
                     withp = false
                 end
-                logMessage('Digit to draw ' .. numbertable[i])
-                self:drawDigit(layer, x + xoffset, y, withp);
+                self:drawDigit(layer, x + xoffset, y, withp, numbertable[i]);
                 xoffset = xoffset + (triangleWidth * 2) + horizontalLineWidth + (triangleWidth * 2) + (lineSpacing * 2)
             end
         end
-        function self:drawDigit(layer, x, y, withpoint)
+        function self:drawDigit(layer, x, y, withpoint, numbToDraw)
             local size, r, g, b, horizontalLineWidth, horizontalLineHeight, triangleWidth, verticalLineWidth, verticalLineHeight, lineSpacing = self.size, self.r, self.g, self.b, self.horizontalLineWidth, self.horizontalLineHeight, self.triangleWidth, self.verticalLineWidth, self.verticalLineHeight, self.lineSpacing
-            defaultx = x
-            defaulty = y
+            local defaultx = x
+            local defaulty = y
+            local defaultr = r
+            local defaultg = g
+            local defaultb = b
             r = r * backcolorRatio
             g = g * backcolorRatio
             b = b * backcolorRatio
-            defaultr = r
-            defaultg = g
-            defaultb = b
+            -- Do we need the separator ?
+            local drawPt = false
+            if #numbToDraw>1 then
+                drawPt = true
+                numbToDraw=numbToDraw.sub(numbToDraw, 1, 1)
+            end
 
+            -- Draw
+            if string.find('02356789', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             -- A segment
             setNextFillColor(layer, r, g, b, 1)
             addBox(layer, x, y, horizontalLineWidth, horizontalLineHeight);
@@ -126,6 +136,14 @@ if not DigitalDisplay then
             addTriangle(layer, x, y, x - triangleWidth, y, x, y + horizontalLineHeight)
 
             -- B segment
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
+            if string.find('01234789', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             x = defaultx + horizontalLineWidth + lineSpacing
             y = defaulty + horizontalLineHeight + lineSpacing
             setNextFillColor(layer, r, g, b, 1)
@@ -136,6 +154,14 @@ if not DigitalDisplay then
             addTriangle(layer, x, y + verticalLineHeight, x + verticalLineWidth, y + verticalLineHeight, x + (verticalLineWidth / 2), y + verticalLineHeight + triangleWidth)
 
             -- C segment
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
+            if string.find('013456789', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             y = defaulty + horizontalLineHeight + verticalLineHeight + (triangleWidth * 2) + (lineSpacing * 2)
             setNextFillColor(layer, r, g, b, 1)
             addBox(layer, x, y, verticalLineWidth, verticalLineHeight);
@@ -145,6 +171,14 @@ if not DigitalDisplay then
             addTriangle(layer, x, y + verticalLineHeight, x + verticalLineWidth, y + verticalLineHeight, x + verticalLineWidth, y + verticalLineHeight + triangleWidth)
 
             -- D segment
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
+            if string.find('023568', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             x = defaultx
             y = y + verticalLineHeight + lineSpacing
             setNextFillColor(layer, r, g, b, 1)
@@ -155,6 +189,14 @@ if not DigitalDisplay then
             addTriangle(layer, x, y + horizontalLineHeight, x - triangleWidth, y + horizontalLineHeight, x, y)
 
             -- E segment
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
+            if string.find('0268', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             x = defaultx - triangleWidth - lineSpacing
             y = defaulty + horizontalLineHeight + verticalLineHeight + (triangleWidth * 2) + (lineSpacing * 2)
             setNextFillColor(layer, r, g, b, 1)
@@ -165,6 +207,14 @@ if not DigitalDisplay then
             addTriangle(layer, x, y + verticalLineHeight, x, y + verticalLineHeight + triangleWidth, x + verticalLineWidth, y + verticalLineHeight)
 
             -- F segment
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
+            if string.find('045689', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             setNextFillColor(layer, r, g, b, 1)
             y = defaulty + horizontalLineHeight + lineSpacing
             addBox(layer, x, y, verticalLineWidth, verticalLineHeight);
@@ -174,6 +224,14 @@ if not DigitalDisplay then
             addTriangle(layer, x, y + verticalLineHeight, x + verticalLineWidth, y + verticalLineHeight, x + (verticalLineWidth / 2), y + verticalLineHeight + triangleWidth)
 
             -- G segment
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
+            if string.find('2345689', numbToDraw) then
+                r = defaultr
+                g = defaultg
+                b = defaultb
+            end
             x = defaultx
             y = defaulty + horizontalLineHeight + verticalLineHeight + triangleWidth - lineSpacing / 2
             setNextFillColor(layer, r, g, b, 1)
@@ -184,7 +242,15 @@ if not DigitalDisplay then
             addTriangle(layer, x, y, x, y + horizontalLineHeight, x - triangleWidth / 2, y + (horizontalLineHeight / 2))
 
             -- point
+            r = r * backcolorRatio
+            g = g * backcolorRatio
+            b = b * backcolorRatio
             if withp then
+                if drawPt then
+                    r = defaultr
+                    g = defaultg
+                    b = defaultb
+                end
                 setNextFillColor(layer, r, g, b, 1)
                 x = defaultx + horizontalLineWidth + (triangleWidth * 2) + lineSpacing
                 y = defaulty + horizontalLineHeight * 2 + verticalLineHeight * 2 + (triangleWidth * 2) + (lineSpacing)
@@ -204,11 +270,18 @@ if not DigitalDisplay then
     end
 end
 
+--# Exemple code to show speed
+-- Import data
+local json = require("dkjson")
+local data = json.decode(getInput()) or {}
+local currentSpeed = math.floor(data.speed)
+
+
 --# Getting resolution
 local rx, ry = getResolution()
 if not _init then
-    testDisplay = DigitalDisplay:new(rx / 2, 10, 3, 3, 1, 0, 0, 0.09)
+    testDisplay = DigitalDisplay:new(10, 10, 3, 5, 1, 0, 0, 0.01)
     _init = true
 end
 local testlayer = createLayer()
-testDisplay:draw(testlayer, 5.3444)
+testDisplay:draw(testlayer, currentSpeed)
