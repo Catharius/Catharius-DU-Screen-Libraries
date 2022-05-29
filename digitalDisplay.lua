@@ -54,7 +54,7 @@ if not DigitalDisplay then
             end
             if nbDecimalToKeep > 0 then
                 --Rounding the number
-                numbertodraw = tonumber(string.format('%.'..nbDecimalToKeep..'f', numbertodraw))
+                numbertodraw = tonumber(string.format('%.' .. nbDecimalToKeep .. 'f', numbertodraw))
             else
                 --Round
                 numbertodraw = tonumber(string.format('%.0f', numbertodraw))
@@ -62,35 +62,34 @@ if not DigitalDisplay then
             local numberstr = ''
             if setAllToNine then
                 for i = 1, maxdigit, 1 do
-                    numberstr = numberstr..'9'
+                    numberstr = numberstr .. '9'
                 end
             else
                 local numberpadding = maxdigit - (nbIntegers + nbDecimalToKeep)
                 -- Case when we have more counters than numbers to display
-                if numberpadding>0 then
-                    for i=1, numberpadding, 1 do
-                        numberstr = numberstr..'X'
+                if numberpadding > 0 then
+                    for i = 1, numberpadding, 1 do
+                        numberstr = numberstr .. 'X'
                     end
-                    numberstr = numberstr..numbertodraw
+                    numberstr = numberstr .. numbertodraw
                 else
                     -- Everything is ok
                     numberstr = numbertodraw
                 end
             end
             --Put the string into a table
-            local numbertable={}
+            local numbertable = {}
             numberstr = tostring(numberstr)
             local indexToRemove = 0
             for i = 1, #numberstr do
-                local fchar =  numberstr:sub(i, i)
+                local fchar = numberstr:sub(i, i)
                 if string.find(tostring(fchar), "%.") then
-                    numbertable[i-1]=numbertable[i-1]..fchar
+                    numbertable[i - 1] = numbertable[i - 1] .. fchar
                     indexToRemove = i
-                else
-                    numbertable[i] = fchar
                 end
+                numbertable[i] = fchar
             end
-            if(indexToRemove>0) then
+            if (indexToRemove > 0) then
                 table.remove(numbertable, indexToRemove)
             end
             xoffset = 0
@@ -116,9 +115,9 @@ if not DigitalDisplay then
             b = b * backcolorRatio
             -- Do we need the separator ?
             local drawPt = false
-            if #numbToDraw>1 then
+            if #numbToDraw > 1 then
                 drawPt = true
-                numbToDraw=numbToDraw.sub(numbToDraw, 1, 1)
+                numbToDraw = numbToDraw.sub(numbToDraw, 1, 1)
             end
 
             -- Draw
@@ -270,18 +269,14 @@ if not DigitalDisplay then
     end
 end
 
---# Exemple code to show speed
--- Import data
-local json = require("dkjson")
-local data = json.decode(getInput()) or {}
-local currentSpeed = math.floor(data.speed)
-
+--# Exemple code
+local exampleNumber = 54.52
 
 --# Getting resolution
 local rx, ry = getResolution()
 if not _init then
-    testDisplay = DigitalDisplay:new(10, 10, 3, 5, 1, 0, 0, 0.01)
+    testDisplay = DigitalDisplay:new(30, 30, 3, 5, 1, 0, 0, 0.01)
     _init = true
 end
 local testlayer = createLayer()
-testDisplay:draw(testlayer, currentSpeed)
+testDisplay:draw(testlayer, exampleNumber)
