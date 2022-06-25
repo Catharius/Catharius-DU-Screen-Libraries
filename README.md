@@ -1,10 +1,18 @@
 # DU-LUA-LIB-CATHARIUS
 A collection of libraries for implementing renderScripting in dual universe
 
-## Digital display
+1 - Donut Chart
+======
+Transform a lua table containing values into a pie chart
+![donutChart](https://raw.githubusercontent.com/Catharius/DU-LUA-LIB-CATHARIUS/master/images/chartExample.jpg)
 
+### Usage
+
+See donutChart.lua for more info. You can copy paste it on an empty screen lua code. The example is at the bottom of the code.
+
+## 2 - Digital display
 Display numbers with style using segment display
-![digitalDisplay](https://raw.githubusercontent.com/Catharius/DU-LUA-LIB-CATHARIUS/master/images/digitalDisplay.jpg?token=GHSAT0AAAAAABTWXVRXMDFQ4HOX4RC7U5EGYUTVBHA)
+![digitalDisplay](https://raw.githubusercontent.com/Catharius/DU-LUA-LIB-CATHARIUS/master/images/digitalDisplay.jpg)
 
 ### Behaviour
 
@@ -13,7 +21,6 @@ The counter will always try to fit a maximum of infos. If there is not enough co
 Example with 3 counters i can display : 0.01 to 99.9  but i can't display 10.36 for example. The counter will display 10.4 and if y want to display 2000 it will show 999 instead
 
 Negatives values are not supported
-
 
 ### Usage
 
@@ -45,3 +52,4 @@ myCounter:draw(aLayer, myValue)
 ```
 - aLayer : a layer (see example to create one)
 - myValue : A positive value (integer or float)
+
