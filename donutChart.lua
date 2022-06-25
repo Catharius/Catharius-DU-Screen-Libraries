@@ -132,8 +132,10 @@ if not DonutChart then
                                 smallValuesOffset = smallValuesOffset + getFontSize(font)
                             end
                         end
-                        setNextTextAlign(labelLayer, AlignH_Center, AlignV_Baseline)
-                        addText(labelLayer, font, "Hidden values", self.x, self.y + (self.height * 33 / 100))
+                        if smallValuesOffset>0 then
+                            setNextTextAlign(labelLayer, AlignH_Center, AlignV_Baseline)
+                            addText(labelLayer, font, "Hidden values", self.x, self.y + (self.height * 33 / 100))
+                        end
                         local fontToUse = mediumfont
                         -- if sumData has more than 6 digits, use a smaller font
                         if sumData > 999999 then
