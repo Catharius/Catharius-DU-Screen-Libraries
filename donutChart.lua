@@ -82,15 +82,13 @@ if not DonutChart then
                                     --DRAW THE PIE CHART
                                     local x = graphCenterX + math.cos(theta) * self.width / elementsRatio
                                     local y = graphCenterY + math.sin(theta) * self.height / elementsRatio
+                                    if self.width < 500 then
+                                      setNextStrokeWidth(graphLayer,2)
+                                    else
+                                      setNextStrokeWidth(graphLayer,4)
+                                    end   
                                     setNextStrokeColor(graphLayer, n.color[1], n.color[2], n.color[3], 1)
                                     addLine(graphLayer, graphCenterX, graphCenterY, x, y)
-                                    -- If Size is too big,draw another line near the first one
-                                    if self.width > 500 then
-                                        setNextStrokeColor(graphLayer, n.color[1], n.color[2], n.color[3], 1)
-                                        addLine(graphLayer, graphCenterX, graphCenterY, x, y - 0.2)
-                                        setNextStrokeColor(graphLayer, n.color[1], n.color[2], n.color[3], 1)
-                                        addLine(graphLayer, graphCenterX, graphCenterY, x, y + 0.2)
-                                    end
                                     -- if we are at the middle draw label
                                     if l == tonumber(string.format('%.0f', drawStartOffset + n.endAngle / 2)) then
                                         local label = tonumber(string.format('%.2f', n.data)) .. " (" .. tonumber(string.format('%.2f', n.percent)) .. "%)"
