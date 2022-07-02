@@ -265,7 +265,7 @@ if not alreadyDeclared then
 end
 
 -- In this example, i draw a static chart only on the first frame, if you want a dynamic one, remove the if statement (Warning : Drawing this at every frame is not wise)
-local testData = { { "", "My ore stock" }, { "Iron", 10 }, { "Silicon", 80 }, { "Gold", 10 },{ "Joke", 1 },{ "Joke 2", 1 }}
+local testData = { { "", "My ore stock" }, { "Data 1", 1 }, { "Data 2", 10 },{ "Data 3", 10 },{ "Data 4", 10 },{ "Data 5", 10 },{ "Data 6", 10 },{ "Data 7", 10 },{ "Data 8", 10 },{ "Data 9", 10 },}
 testPie:draw(testData)
 
 -- Note that if you don't need real time chart data you can remove this line, a simple mouse click will refresh the chart
