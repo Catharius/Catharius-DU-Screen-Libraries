@@ -8,6 +8,7 @@ Transform a lua table containing values into a pie chart
 
 ### Usage
 
+You can click in the center of the circle to view various data (Sum, Average, Min, Max)
 See donutChart.lua for more info. You can copy paste it on an empty screen lua code. The example is at the bottom of the code.
 
 ## 2 - Digital display
