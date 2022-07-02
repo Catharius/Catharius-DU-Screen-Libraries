@@ -1,7 +1,7 @@
 if not DonutChart then
     DonutChart = {}
     DonutChart.__index = DonutChart
-    function DonutChart:new(posX, posY, circleDiameter, dataUnit, showSmallValues)
+    function DonutChart:new(posX, posY, circleDiameter, dataUnit)
         local self = {
             x = posX,
             y = posY,
@@ -9,7 +9,6 @@ if not DonutChart then
             data = dataLuaArray,
             graphType = graphType,
             dataUnit = dataUnit or '',
-            showSmallValues = showSmallValues or false,
             colorList = { { 65 / 255, 133 / 255, 244 / 255 }, { 233 / 255, 67 / 255, 53 / 255 }, { 250 / 255, 188 / 255, 4 / 255 }, { 51 / 255, 168 / 255, 83 / 255 }, { 255 / 255, 108 / 255, 1 / 255 }, { 71 / 255, 189 / 255, 198 / 255 }, { 123 / 255, 171 / 255, 247 / 255 }, { 241 / 255, 123 / 255, 114 / 255 }, { 252 / 255, 208 / 255, 80 / 255 }, { 112 / 255, 194 / 255, 135 / 255 }, { 255 / 255, 154 / 255, 77 / 255 }, { 125 / 255, 209 / 255, 215 / 255 }, { 179 / 255, 207 / 255, 251 / 255 }, { 243 / 255, 180 / 255, 174 / 255 }, { 254 / 255, 228 / 255, 155 / 255 }, { 173 / 255, 220 / 255, 186 / 255 }, { 255 / 255, 198 / 255, 153 / 255 }, { 180 / 255, 229 / 255, 232 / 255 }, { 233 / 255, 243 / 255, 254 / 255 }, { 254 / 255, 236 / 255, 235 / 255 } },
             currentCentralMenu = 1
         }
@@ -234,8 +233,7 @@ if not DonutChart then
                 setNextFillColor(centralLayer, 0.001, 0, 0, 1)
                 addCircle(centralLayer, self.x, self.y, circleRadius/2)
 
-
-                -- For now only one pie chart per column is supported (Too cpu intensive to draw more than one pie chart per column)
+                -- For now only one pie chart is supported (Size of screen is too small to read values correctly)
                 break
             end
         end
@@ -259,12 +257,16 @@ local rx, ry = getResolution()
 -- Declared only once
 if not alreadyDeclared then
     alreadyDeclared = true
-    -- We declare here our chart object (position X and Y are the center of the chart, width is it's size
-    -- Disclaimer : you choose the diameter of the chart but in order to see the labels on the side, do not use the entire screen width as diameter)
+    -- We declare here our chart object only once
+    -- DonutChart:new(posX, posY, circleDiameter, dataUnit)
+    -- posX and posY are coodinates of the center, dataUnit is the value type label (Use the string  "L" for fluids for example) 
+    -- Disclaimer : The diameter the chart does not include labels, in order to see the labels on the side, do not use the entire screen width as diameter)
     testPie = DonutChart:new(rx / 2, ry / 2, 400, "kg")
 end
 
--- In this example, i draw a static chart only on the first frame, if you want a dynamic one, remove the if statement (Warning : Drawing this at every frame is not wise)
+-- In this example, i draw a static chart, the data is a table with the first column containing data types and second colum data value
+-- First line is my chartName, first colum is my data label
+-- You can also feed the chart with dynamic data using the getInput() method
 local testData = { { "", "My ore stock" }, { "Data 1", 1 }, { "Data 2", 10 },{ "Data 3", 10 },{ "Data 4", 10 },{ "Data 5", 10 },{ "Data 6", 10 },{ "Data 7", 10 },{ "Data 8", 10 },{ "Data 9", 10 },}
 testPie:draw(testData)
 
