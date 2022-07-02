@@ -184,7 +184,7 @@ if not DonutChart then
                 end
                 -- Draw pie background
                 setNextFillColor(backgroundLayer,lastColor[1], lastColor[2], lastColor[3], 1)
-                addCircle(backgroundLayer, self.x, self.y, circleRadius)
+                addCircle(backgroundLayer, self.x, self.y, circleRadius+2)
 
                 local mx, my = getCursor()
                 if distanceFrom(self.x, self.y, mx, my)<=circleRadius/2 then
