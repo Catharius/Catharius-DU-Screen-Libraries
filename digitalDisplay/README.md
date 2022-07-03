@@ -1,6 +1,6 @@
 ## Digital display
 Display numbers with style using segment display
-![digitalDisplay](https://raw.githubusercontent.com/Catharius/DU-LUA-LIB-CATHARIUS/master/images/digitalDisplay.jpg)
+![digitalDisplay](https://github.com/Catharius/DU-LUA-LIB-CATHARIUS/blob/master/images/ddisplay.jpg)
 
 ### Behaviour
 
