@@ -147,7 +147,17 @@ if not CircularGauge then
                     if gaugeType ~= CircularGauge.FULL then
                         addCircle(backgroundLayer, x1, y1, 2)
                     end
-
+                    
+                    -- Draw the graduations
+                    if i >= currentGraduationIncrement and i < currentGraduationIncrement + 1 then
+                        currentGraduationIncrement = currentGraduationIncrement + graduationIncrement
+                        setNextStrokeWidth(graduationLayer, 2)
+                        addLine(graduationLayer, x1, y1, x2, y2)
+                        setNextTextAlign(graduationLayer, AlignH_Center, AlignV_Middle)
+                        addText(graduationLayer, font, currentGraduationLabel, x3, y3)
+                        currentGraduationLabel = currentGraduationLabel + self.graduationValue
+                    end
+                    
                     -- Draw danger zone
                     if drawDZ and i >= dangerZone[1] and i <= dangerZone[2] then
                         setNextStrokeColor(graduationLayer, 1, 0, 0, 1)
@@ -158,16 +168,7 @@ if not CircularGauge then
                         local y5 = self.y + math.sin(theta) * (circleRadius - 5)
                         addLine(graduationLayer, x4, y4, x5, y5)
                     end
-
-                    -- Draw the graduations
-                    if i >= currentGraduationIncrement and i < currentGraduationIncrement + 1 then
-                        currentGraduationIncrement = currentGraduationIncrement + graduationIncrement
-                        setNextStrokeWidth(graduationLayer, 2)
-                        addLine(graduationLayer, x1, y1, x2, y2)
-                        setNextTextAlign(graduationLayer, AlignH_Center, AlignV_Middle)
-                        addText(graduationLayer, font, currentGraduationLabel, x3, y3)
-                        currentGraduationLabel = currentGraduationLabel + self.graduationValue
-                    end
+                    
                     -- Draw indicator
                     if i >= valueGraduation and i < valueGraduation + 1 then
                         setNextStrokeColor(graduationLayer, 1, 0, 0, 1)
