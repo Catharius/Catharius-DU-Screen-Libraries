@@ -201,7 +201,7 @@ if not alreadyDeclared then
 
     -- CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGraduation, gaugeLabel1, gaugeLabel2, gaugeType)
     -- You can choose the gauges types (FULL, HALF, HALF_LEFT, HALF_RIGHT,QUARTER, QUARTER_LEFT, QUARTER_TOP_LEFT, QUARTER_BOTTOM_LEFT, QUARTER_RIGHT, QUARTER_BOTTOM_RIGHT, QUARTER_TOP_RIGHT)
-    -- Here i want a gauge with graduations 100 by 100 and 10 graduations so from 0 to 1000
+    -- Here i want a gauge with graduations 200 by 200 and 10 graduations so from 0 to 2000
     centralTestGauge = CircularGauge:new(rx / 2, ry / 2, 400, 200, 10, "Current Speed", "km/h", CircularGauge.FULL)
 
     -- Then i want  two gauges on the left corners of my screen for fuel monitoring
