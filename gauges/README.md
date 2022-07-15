@@ -12,7 +12,7 @@ if not alreadyDeclared then
     alreadyDeclared = true
     -- CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGraduation, gaugeLabel1, gaugeLabel2, gaugeType)
 
-    -- Here i want a gauge with graduations 100 by 100 and 10 graduations so from 0 to 1000
+    -- Here i want a gauge with graduations 200 by 200 and 10 graduations so from 0 to 2000
     centralTestGauge = CircularGauge:new(rx / 2, ry / 2, 400, 200, 10, "Current Speed", "km/h", CircularGauge.FULL)
 end
 -- Here i want to draw the centralGauge, i pass 50 km/h as value (This is an example, the real data should be passed from the piloting seat to the screen)
