@@ -62,7 +62,7 @@ if not CircularGauge then
                 elseif gaugeType == CircularGauge.QUARTER_TOP_LEFT then
                     rotation = 90
                     maxAngle = 90
-                    gaugeLabelY = self.y + circleRadius / 2
+                    gaugeLabelY = self.y + circleRadius / 4
                     drawDirection = -pi180
                 elseif gaugeType == CircularGauge.QUARTER_BOTTOM_LEFT then
                     rotation = 0
