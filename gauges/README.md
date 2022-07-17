@@ -2,6 +2,10 @@
 Gauges
 ======
 Create a gauge to show a value
+
+NEW : You can now also use this lib on your hud instead of screen. See [circularGaugeHudVersion.lua](circularGaugeHudVersion.lua) for lib and 
+[hudExample](hudExample)
+
 ![circularGauge](https://github.com/Catharius/DU-LUA-LIB-CATHARIUS/blob/master/images/cgauge2.jpg)
 
 ## How to create a circular gauge
