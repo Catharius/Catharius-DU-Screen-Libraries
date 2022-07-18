@@ -129,6 +129,7 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
             end
 
             local polylinePoints = ""
+            local polylinePointsDz = ""
             for i = 0, maxAngle, 1 do
                 local x1 = self.x + math.cos(theta) * (circleRadius + 2)
                 local y1 = self.y + math.sin(theta) * (circleRadius + 2)
@@ -156,9 +157,7 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
                 if drawDZ and i >= dangerZone[1] and i <= dangerZone[2] then
                     local x4 = self.x + math.cos(theta) * (circleRadius - 2)
                     local y4 = self.y + math.sin(theta) * (circleRadius - 2)
-                    local x5 = self.x + math.cos(theta) * (circleRadius - 8)
-                    local y5 = self.y + math.sin(theta) * (circleRadius - 8)
-                    svgRendering = svgRendering .. "<line x1=\"" .. x4 .. "\" y1=\"" .. y4 .. "\" x2=\"" .. x5 .. "\" y2=\"" .. y5 .. "\" stroke=\"#FF0000\" stroke-width=\"5\" />"
+                    polylinePointsDz = polylinePointsDz .. x4 .. "," .. y4 .. " "
                 end
 
                 -- Draw indicator
@@ -171,6 +170,10 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
             -- Draw the outer circle if needed
             if polylinePoints ~= "" then
                 svgRendering = svgRendering .. "<polyline points=\"" .. polylinePoints .. "\" fill=\"none\" stroke=\"white\" stroke-width=\"4\" />"
+            end
+            -- Draw the danger zone if needed
+            if polylinePointsDz ~= "" then
+                svgRendering = svgRendering .. "<polyline points=\"" .. polylinePointsDz .. "\" fill=\"none\" stroke=\"#FF0000\" stroke-width=\"5\" />"
             end
 
         end
