@@ -128,9 +128,10 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
                 dangerZone[2] = (dangerZone[2] / self.graduationValue) * graduationIncrement
             end
 
+            local polylinePoints = ""
             for i = 0, maxAngle, 1 do
-                local x1 = self.x + math.cos(theta) * (circleRadius - 1)
-                local y1 = self.y + math.sin(theta) * (circleRadius - 1)
+                local x1 = self.x + math.cos(theta) * (circleRadius + 2)
+                local y1 = self.y + math.sin(theta) * (circleRadius + 2)
                 local x2 = self.x + math.cos(theta) * (circleRadius - graduationSize)
                 local y2 = self.y + math.sin(theta) * (circleRadius - graduationSize)
                 local x3 = self.x + math.cos(theta) * (circleRadius - biggestGraduationWidth - graduationLabelOffset)
@@ -138,7 +139,9 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
 
                 -- Draw outer circle
                 if gaugeType ~= CircularGauge.FULL then
-                    svgRendering = svgRendering .. "<circle cx=\"" .. x1 .. "\" cy=\"" .. y1 .. "\" r=\"2\" fill=\"#FFFFFF\" stroke=\"white\" stroke-width=\"1\" />"
+                    local x0 = self.x + math.cos(theta) * circleRadius
+                    local y0 = self.y + math.sin(theta) * circleRadius
+                    polylinePoints = polylinePoints .. x0 .. "," .. y0 .. " "
                 end
 
                 -- Draw the graduations
@@ -151,11 +154,11 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
 
                 -- Draw danger zone
                 if drawDZ and i >= dangerZone[1] and i <= dangerZone[2] then
-                    local x4 = self.x + math.cos(theta) * (circleRadius - 3)
-                    local y4 = self.y + math.sin(theta) * (circleRadius - 3)
-                    local x5 = self.x + math.cos(theta) * (circleRadius - 5)
-                    local y5 = self.y + math.sin(theta) * (circleRadius - 5)
-                    svgRendering = svgRendering .. "<line x1=\"" .. x4 .. "\" y1=\"" .. y4 .. "\" x2=\"" .. x5 .. "\" y2=\"" .. y5 .. "\" stroke=\"#FF0000\" stroke-width=\"3\" />"
+                    local x4 = self.x + math.cos(theta) * (circleRadius - 2)
+                    local y4 = self.y + math.sin(theta) * (circleRadius - 2)
+                    local x5 = self.x + math.cos(theta) * (circleRadius - 8)
+                    local y5 = self.y + math.sin(theta) * (circleRadius - 8)
+                    svgRendering = svgRendering .. "<line x1=\"" .. x4 .. "\" y1=\"" .. y4 .. "\" x2=\"" .. x5 .. "\" y2=\"" .. y5 .. "\" stroke=\"#FF0000\" stroke-width=\"5\" />"
                 end
 
                 -- Draw indicator
@@ -164,6 +167,12 @@ function CircularGauge:new(posX, posY, circleDiameter, graduationValue, nbOfGrad
                 end
                 theta = theta + drawDirection
             end
+
+            -- Draw the outer circle if needed
+            if polylinePoints ~= "" then
+                svgRendering = svgRendering .. "<polyline points=\"" .. polylinePoints .. "\" fill=\"none\" stroke=\"white\" stroke-width=\"4\" />"
+            end
+
         end
 
         return [[<svg style="position: absolute; left:0px; top:0px" viewBox="0 0 ]] .. self.screenWidth .. [[ ]] .. self.screenHeight .. [[">]]..svgRendering..[[</svg>]]
