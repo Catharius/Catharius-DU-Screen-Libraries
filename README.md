@@ -1,5 +1,6 @@
-# DU-LUA-LIB-CATHARIUS
-A collection of libraries for implementing renderScripting in dual universe
+# Catharius-DU-Screen-Libraries
+
+A collection of Dual Universe screen renderScripting libraries.
 
 - [Digital display](digitalDisplay/README.md)
 - [Donut chart](donutChart/README.md)
